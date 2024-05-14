@@ -1,10 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const PORT = 8001
 
 const app = express()
 
+app.use(cors())
 app.use(bodyParser.json())
 
 app.post('/calculate', (request, response) => {
@@ -28,8 +30,14 @@ app.post('/calculate', (request, response) => {
             } else {
                 result = num1 / num2
             }
+            break
         default:
-            response.status(400).json({ error: 'Invalid Operation' })
-
+            result = num1 + num2
     }
+
+    response.json({ result })
+})
+
+app.listen(PORT, () => {
+    console.log('Server is running...')
 })
